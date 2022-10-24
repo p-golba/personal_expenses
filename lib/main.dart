@@ -30,63 +30,95 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Personal Expenses'),
       ),
-      body: Column(children: [
-        const SizedBox(
-          width: double.infinity,
-          child: Card(
-            color: Colors.blueGrey,
-            child: Text('Card Placeholder'),
-          ),
-        ),
-        Column(
-          children: transactions.map((tx) {
-            return Card(
-              child: Row(children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 15,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.purple,
-                      width: 2,
-                    ),
-                  ),
-                  padding: const EdgeInsets.all(10),
-                  child: Text(
-                    '\$${tx.amount}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.purple,
-                    ),
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(
+              width: double.infinity,
+              child: Card(
+                color: Colors.blueGrey,
+                child: Text('Card Placeholder'),
+              ),
+            ),
+            Card(
+              elevation: 5,
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(
-                      tx.title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                    const TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Title',
                       ),
                     ),
-                    Text(
-                      DateFormat.yMMMEd().format(tx.date),
-                      style: const TextStyle(
-                        fontSize: 11,
-                        color: Colors.grey,
+                    const TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Ammount',
                       ),
                     ),
+                    TextButton(
+                      style: ButtonStyle(
+                        foregroundColor:
+                          MaterialStateProperty.all(Colors.purple),
+                      ),
+                      onPressed: () {},
+                      child: const Text('Add Transaction'),
+                    )
                   ],
-                )
-              ]),
-            );
-          }).toList(),
-        )
-      ]),
+                ),
+              ),
+            ),
+            Column(
+              children: transactions.map((tx) {
+                return Card(
+                  child: Row(children: [
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 15,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.purple,
+                          width: 2,
+                        ),
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        '\$${tx.amount}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.purple,
+                        ),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          tx.title,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text(
+                          DateFormat.yMMMEd().format(tx.date),
+                          style: const TextStyle(
+                            fontSize: 11,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    )
+                  ]),
+                );
+              }).toList(),
+            )
+          ]),
     );
   }
 }
