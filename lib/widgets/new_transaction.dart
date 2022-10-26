@@ -1,11 +1,34 @@
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
+class NewTransaction extends StatefulWidget {
   final Function addNewTransaction;
+
+  const NewTransaction(this.addNewTransaction, {super.key});
+
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
   final titleController = TextEditingController();
+
   final amountController = TextEditingController();
 
-  NewTransaction(this.addNewTransaction, {super.key});
+  void submitData() {
+    final enteredTitle = titleController.text;
+    final enteredAmmount = double.parse(amountController.text);
+
+    if (enteredTitle.isEmpty || enteredAmmount <= 0){
+      return;
+    }
+
+    widget.addNewTransaction(
+      enteredTitle,
+      enteredAmmount,
+    );
+
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +40,16 @@ class NewTransaction extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             TextField(
+              onSubmitted: (_) => submitData(),
               controller: titleController,
               decoration: const InputDecoration(
                 labelText: 'Title',
               ),
             ),
             TextField(
+              onSubmitted: (_) => submitData(),
               controller: amountController,
+              keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 labelText: 'Ammount',
               ),
@@ -32,12 +58,7 @@ class NewTransaction extends StatelessWidget {
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all(Colors.purple),
               ),
-              onPressed: () {
-                addNewTransaction(
-                  titleController.text,
-                  double.parse(amountController.text),
-                );
-              },
+              onPressed: submitData,
               child: const Text('Add Transaction'),
             )
           ],
