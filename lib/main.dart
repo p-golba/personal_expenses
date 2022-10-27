@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import './widgets/transaction_list.dart';
 import './widgets/new_transaction.dart';
+import './widgets/chart.dart';
 import './models/transaction.dart';
+
 
 void main() => runApp(const MyApp());
 
@@ -61,6 +63,10 @@ class _MyHomePageState extends State<MyHomePage> {
     //   date: DateTime.now(),
     // ),
   ];
+
+  // List<Transaction> get _recentTransactions{
+  //   return _userTransactions.where((element) => false);
+  // }
 
   void _addNewTransaction(String txTitle, double txAmount) {
     final newTx = Transaction(
