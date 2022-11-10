@@ -13,19 +13,20 @@ class NewTransaction extends StatefulWidget {
 class _NewTransactionState extends State<NewTransaction> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
-  late DateTime _selectedDate;
+  DateTime? _selectedDate;
 
   void _submitData() {
     final enteredTitle = _titleController.text;
     final enteredAmmount = double.parse(_amountController.text);
 
-    if (enteredTitle.isEmpty || enteredAmmount <= 0) {
+    if (enteredTitle.isEmpty || enteredAmmount <= 0 || _selectedDate == null) {
       return;
     }
 
     widget.addNewTransaction(
       enteredTitle,
       enteredAmmount,
+      _selectedDate,
     );
 
     Navigator.of(context).pop();
@@ -73,9 +74,11 @@ class _NewTransactionState extends State<NewTransaction> {
               height: 70,
               child: Row(
                 children: [
-                  Text(_selectedDate == null
-                      ? 'No Date Chosen!'
-                      : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}'),
+                  Expanded(
+                    child: Text(_selectedDate == null
+                        ? 'No Date Chosen!'
+                        : 'Picked Date: ${DateFormat.yMd().format(_selectedDate!)}'),
+                  ),
                   TextButton(
                     onPressed: _presentDatePicker,
                     child: const Text(
